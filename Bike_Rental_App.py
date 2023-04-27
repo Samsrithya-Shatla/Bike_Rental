@@ -69,3 +69,30 @@ def update_record():
             cursor.execute(query, values)
             db.commit()
             show_table_contents()
+                def delete_record():
+    table_name = table_var.get()
+
+    if table_name:
+        # Get the primary key column name and value
+        pk_col_name = get_primary_key(table_name)
+        pk_value = None
+        if pk_col_name:
+            for i, label in enumerate(field_labels):
+                if label['text'] == pk_col_name:
+                    pk_value = field_entries[i].get()
+                    break
+
+
+
+        if pk_col_name and pk_value:
+            # Debug information
+            print(f"Table name: {table_name}")
+            print(f"Primary key column name: {pk_col_name}")
+            print(f"Primary key value: {pk_value}")
+
+            # Delete the record
+            query = f"DELETE FROM {table_name} WHERE {pk_col_name}=%s"
+            print(f"SQL query: {query}")
+            cursor.execute(query, (pk_value,))
+            db.commit()
+            show_table_contents()
