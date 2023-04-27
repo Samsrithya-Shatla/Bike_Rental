@@ -90,7 +90,7 @@ def update_record():
             print(f"Primary key column name: {pk_col_name}")
             print(f"Primary key value: {pk_value}")
 
-            # Delete the record
+           
             query = f"DELETE FROM {table_name} WHERE {pk_col_name}=%s"
             print(f"SQL query: {query}")
             cursor.execute(query, (pk_value,))
@@ -115,7 +115,7 @@ def update_record():
         for record in tree.get_children():
             tree.delete(record)
 
-        # Set up the columns in the treeview
+    
         tree["columns"] = ("BikeID", "Model", "TotalEarnings")
         tree.column("BikeID", anchor="w", stretch=tk.YES, minwidth=100)
         tree.heading("BikeID", text="Bike ID")
@@ -124,11 +124,9 @@ def update_record():
         tree.column("TotalEarnings", anchor="w", stretch=tk.YES, minwidth=100)
         tree.heading("TotalEarnings", text="Total Earnings")
 
-        # Insert the results into the treeview
         for result in results:
             tree.insert('', 'end', values=result)
     else:
-        # Show an error message if the "bikes" table is not selected
         tk.messagebox.showerror("Error", "Please select the 'bikes' table.")
         
  def find_most_rented_bikes():
@@ -144,11 +142,11 @@ def update_record():
         cursor.execute(query)
         results = cursor.fetchall()
 
-        # Clear the treeview
+       
         for record in tree.get_children():
             tree.delete(record)
 
-        # Set up the columns in the treeview
+
         tree["columns"] = ("BikeID", "BikeType", "NumberOfRentals")
         tree.column("BikeID", anchor="w", stretch=tk.YES, minwidth=100)
         tree.heading("BikeID", text="Bike ID")
@@ -157,13 +155,10 @@ def update_record():
         tree.column("NumberOfRentals", anchor="w", stretch=tk.YES, minwidth=100)
         tree.heading("NumberOfRentals", text="Number of Rentals")
 
-        # Insert the results into the treeview
         for result in results:
             tree.insert('', 'end', values=result)
     else:
-        # Show an error message if the "bikes" table is not selected
         tk.messagebox.showerror("Error", "Please select the 'bikes' table.")
-    # Connect to the MySQL database
 db = mysql.connector.connect(
     host="localhost",
     user="root",
@@ -171,19 +166,3 @@ db = mysql.connector.connect(
     database="BikeRentalDB"
 )
 cursor = db.cursor()
-
-# Set up the widgets
-table_var = tk.StringVar()
-
-label = ttk.Label(left_frame, text="Table Select:")
-label.grid(row=0, column=0, pady=10)
-# Set up the heading
-heading_label = ttk.Label(left_frame, text="CRUD Functions", font=("TkDefaultFont", 16, "bold"))
-heading_label.grid(row=3, column=0, padx=10, pady=20)
-
-table_combo = ttk.Combobox(left_frame, textvariable=table_var)
-table_combo['values'] = ('customers', 'bikes', 'rentals', 'invoices')  # Your table names
-table_combo.grid(row=1, column=0, pady=10)
-
-show_button = ttk.Button(left_frame, text="Submit", command=lambda: [show_table_contents(), show_fields()])
-show_button.grid(row=1, column=1, pady=10)
