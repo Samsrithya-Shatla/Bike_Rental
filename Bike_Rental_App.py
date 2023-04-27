@@ -171,3 +171,19 @@ db = mysql.connector.connect(
     database="BikeRentalDB"
 )
 cursor = db.cursor()
+
+# Set up the widgets
+table_var = tk.StringVar()
+
+label = ttk.Label(left_frame, text="Table Select:")
+label.grid(row=0, column=0, pady=10)
+# Set up the heading
+heading_label = ttk.Label(left_frame, text="CRUD Functions", font=("TkDefaultFont", 16, "bold"))
+heading_label.grid(row=3, column=0, padx=10, pady=20)
+
+table_combo = ttk.Combobox(left_frame, textvariable=table_var)
+table_combo['values'] = ('customers', 'bikes', 'rentals', 'invoices')  # Your table names
+table_combo.grid(row=1, column=0, pady=10)
+
+show_button = ttk.Button(left_frame, text="Submit", command=lambda: [show_table_contents(), show_fields()])
+show_button.grid(row=1, column=1, pady=10)
