@@ -96,5 +96,39 @@ def update_record():
             cursor.execute(query, (pk_value,))
             db.commit()
             show_table_contents()
-
                 
+def calculate_total_rentals():
+    table_name = "rentals"
+    if table_name == "rentals":
+        query = """
+            SELECT customers.customer_id, customers.first_name, customers.last_name, COUNT(*) as TotalRentals
+            FROM rentals
+            JOIN customers ON rentals.customer_id = customers.customer_id
+            GROUP BY customers.customer_id
+        """
+        cursor.execute(query)
+        results = cursor.fetchall()
+
+        # Clear the treeview
+        for record in tree.get_children():
+            tree.delete(record)
+
+
+        # Set up the columns in the treeview
+        tree["columns"] = ("CustomerID", "FirstName", "LastName", "TotalRentals")
+        tree.column("CustomerID", anchor="w", stretch=tk.YES, minwidth=100)
+        tree.heading("CustomerID", text="Customer ID")
+        tree.column("FirstName", anchor="w", stretch=tk.YES, minwidth=100)
+        tree.heading("FirstName", text="First Name")
+        tree.column("LastName", anchor="w", stretch=tk.YES, minwidth=100)
+        tree.heading("LastName", text="Last Name")
+        tree.column("TotalRentals", anchor="w", stretch=tk.YES, minwidth=100)
+        tree.heading("TotalRentals", text="Total Rentals")
+
+        # Insert the results into the treeview
+        for result in results:
+            tree.insert('', 'end', values=result)
+    else:
+        # Show an error message if the "rentals" table is not selected
+        tk.messagebox.showerror("Error", "Please select the 'rentals' table.")
+                        
