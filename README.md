@@ -6,13 +6,13 @@ Git hub: https://github.com/Samsrithya-Shatla
 
 member#2
 Name: Karthik G
-ID:
-Git hub:
+ID: V574J557
+Git hub: https://github.com/Karthik651
 
 member#3
 Name Saketh Y
-ID:
-Git hub: 
+ID: H254U795
+Git hub: https://github.com/sakethraghuvaran
 
 #Project DEMO
 We have uploaded the project Demo to the get repository(with commit:Project DEMO) and youtube 
