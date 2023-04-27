@@ -96,3 +96,5 @@ def update_record():
             cursor.execute(query, (pk_value,))
             db.commit()
             show_table_contents()
+
+                
