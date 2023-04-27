@@ -163,3 +163,11 @@ def update_record():
     else:
         # Show an error message if the "bikes" table is not selected
         tk.messagebox.showerror("Error", "Please select the 'bikes' table.")
+    # Connect to the MySQL database
+db = mysql.connector.connect(
+    host="localhost",
+    user="root",
+    password="S.Sam1461",
+    database="BikeRentalDB"
+)
+cursor = db.cursor()
