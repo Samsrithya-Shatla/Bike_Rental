@@ -131,3 +131,35 @@ def update_record():
         # Show an error message if the "bikes" table is not selected
         tk.messagebox.showerror("Error", "Please select the 'bikes' table.")
         
+ def find_most_rented_bikes():
+    table_name = "bikes"
+    if table_name == "bikes":
+        query = """
+            SELECT bikes.bike_id, bikes.bike_type, COUNT(rentals.rental_id) as NumberOfRentals
+            FROM bikes
+            JOIN rentals ON rentals.bike_id = bikes.bike_id
+            GROUP BY bikes.bike_id
+            ORDER BY NumberOfRentals DESC;
+        """
+        cursor.execute(query)
+        results = cursor.fetchall()
+
+        # Clear the treeview
+        for record in tree.get_children():
+            tree.delete(record)
+
+        # Set up the columns in the treeview
+        tree["columns"] = ("BikeID", "BikeType", "NumberOfRentals")
+        tree.column("BikeID", anchor="w", stretch=tk.YES, minwidth=100)
+        tree.heading("BikeID", text="Bike ID")
+        tree.column("BikeType", anchor="w", stretch=tk.YES, minwidth=100)
+        tree.heading("BikeType", text="Bike Type")
+        tree.column("NumberOfRentals", anchor="w", stretch=tk.YES, minwidth=100)
+        tree.heading("NumberOfRentals", text="Number of Rentals")
+
+        # Insert the results into the treeview
+        for result in results:
+            tree.insert('', 'end', values=result)
+    else:
+        # Show an error message if the "bikes" table is not selected
+        tk.messagebox.showerror("Error", "Please select the 'bikes' table.")
